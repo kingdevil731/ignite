@@ -8,8 +8,8 @@ import { useDispatch } from "react-redux";
 import { loadDetail } from "../actions/detailAction";
 // Link
 import { Link } from "react-router-dom";
-// Image Resize
-import { smallImage } from "../util";
+// Image Resize & getPlatform Svg
+import { getPlatform, smallImage } from "../util";
 
 const Game = ({
   name,
@@ -62,7 +62,12 @@ const Game = ({
     >
       <Link to={`/game/${id}`}>
         <motion.h3 layoutId={`title ${stringPathId}`}>{name}</motion.h3>
-        <p>{released}</p>
+        <p>Release: {released}</p>
+        <Platforms>
+          {platforms.map((item) => {
+            return <img src={getPlatform(item.platform.name)} alt={item} />;
+          })}
+        </Platforms>
         <motion.img
           layoutId={`image ${stringPathId}`}
           src={smallImage(background_image, 640)}
@@ -84,6 +89,17 @@ const StyledGame = styled(motion.div)`
     width: 100%;
     height: 40vh;
     object-fit: cover;
+  }
+`;
+const Platforms = styled(motion.div)`
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  img {
+    margin-left: 0;
+    width: 1.2rem;
+    height: 1.2rem;
   }
 `;
 
